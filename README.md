@@ -113,6 +113,18 @@ hardcoded vendor list in its prompt — a prompt that would go stale the moment 
 
 ---
 
+## Screenshots
+
+| | |
+|---|---|
+| [Privacy property verified](screenshots/01-privacy-verified.png) | The decisive echo test — every `{{profile.*}}` resolved by the host |
+| [Contract behaviour](screenshots/02-contract-behaviour.png) | `list-providers`, the PII guard firing, and TEE-side logs |
+| [Profile schema probe](screenshots/03-profile-schema-probe.png) | Which markers actually resolve — and the two the official samples get wrong |
+| [BUG-10, the blocker](screenshots/04-bug10-blocker.png) | No environment can complete a verified handshake |
+| [Tests and build](screenshots/05-tests-and-build.png) | 20 tests, zero warnings, component interface |
+
+![Privacy property verified](screenshots/01-privacy-verified.png)
+
 ## Proof: the privacy property, measured not claimed
 
 Bring-up used `httpbin.org/post` as the vendor, because it echoes the request body back. That makes the
