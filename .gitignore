@@ -1,0 +1,14 @@
+# credentials — never commit
+.secrets/
+*.env
+!*.env.example
+
+# build output
+target/
+node_modules/
+
+# upstream clone, kept locally for reference only (not ours to redistribute)
+reference-impl/
+
+# offline docs snapshot used during the build
+docs/

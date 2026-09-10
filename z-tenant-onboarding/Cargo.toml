@@ -1,0 +1,31 @@
+[package]
+name = "z-tenant-onboarding"
+version = "0.1.1"
+edition = "2021"
+description = "Employee onboarding agent contract for T3N — enrols an employee into third-party HR vendors without the contract ever holding their PII"
+license = "MIT"
+publish = false
+
+# cdylib is what makes the wasm32-wasip2 target emit a WASM *component*
+# rather than a bare module. "lib" is kept so the pure logic (template
+# rendering, config parsing, PII rejection) stays unit-testable natively —
+# `cargo test` runs on the host target without a cluster.
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+wit-bindgen = { version = "0.49", default-features = false, features = ["macros", "realloc"] }
+serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+# Required, not optional: tenant_did() returns raw bytes and must be hex-encoded
+# exactly once when building the `z:<tid>:` map path. The published walkthrough's
+# Cargo.toml omits this while its own troubleshooting table tells you to call
+# hex::encode — see findings/BUGS.md BUG-04.
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+
+# Keep the artifact small — registration has a size cap.
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true

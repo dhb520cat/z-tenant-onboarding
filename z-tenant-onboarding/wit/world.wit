@@ -1,0 +1,60 @@
+/// z-tenant-onboarding — employee onboarding agent contract.
+///
+/// An onboarding agent enrols one employee into the several third-party HR
+/// systems a company uses (benefits, background check, payroll, equipment,
+/// SaaS seats). Each of those enrolments needs the same handful of personal
+/// details, and today they are typically re-keyed by hand into each vendor's
+/// portal — so the employee's PII ends up copied across mailboxes,
+/// spreadsheets and vendor dashboards, with no record of who sent what where.
+///
+/// This contract sends those enrolments **without ever holding the PII**. The
+/// request body carries `{{profile.<field>}}` markers; the host resolves them
+/// from the calling employee's profile inside the enclave, at dispatch time.
+/// WASM memory only ever contains the marker text.
+///
+/// The set of vendors is **data, not code**. Each vendor is one JSON document
+/// in the tenant KV map `z:<tid>:onboarding-providers`. Adding a vendor is a
+/// map write — no Rust change, no rebuild, no re-registration. See README.md.
+///
+/// Host interface versions below match what the target cluster actually
+/// provides, verified against `wit/deps/`. (The published walkthrough documents
+/// 2.2.0 / 1.2.0, which do not exist in the reference repo — see
+/// findings/BUGS.md BUG-03.)
+package z:tenant-onboarding@0.1.0;
+
+world tenant-onboarding {
+    import host:tenant/tenant-context@1.0.0;
+    import host:interfaces/logging@2.1.0;
+    import host:interfaces/kv-store@2.1.0;
+    import host:interfaces/http-with-placeholders@2.1.0;
+
+    export contracts;
+}
+
+interface contracts {
+    /// Uniform 3-field envelope used by every node-callable contract.
+    ///   input        — JSON arguments for this function, as bytes
+    ///   user-profile — None for tenant contracts (resolved host-side)
+    ///   context      — node-minted DynamicContext (trusted), as bytes
+    record generic-input {
+        input:        option<list<u8>>,
+        user-profile: option<list<u8>>,
+        context:      option<list<u8>>,
+    }
+
+    /// Enumerate the configured vendors, without their secrets.
+    /// Input  (JSON): {} — no arguments
+    /// Output (JSON): { providers: [{ id, name, url, required_fields }] }
+    ///
+    /// Lets an agent discover what it can enrol into at runtime instead of
+    /// carrying a hardcoded vendor list in its prompt.
+    list-providers: func(req: generic-input) -> result<list<u8>, string>;
+
+    /// Enrol the calling employee into one vendor.
+    /// Input  (JSON): { provider_id, fields?: { <name>: <json> } }
+    ///   `fields` supplies non-PII values the template marks as caller-filled
+    ///   (plan id, start date, cost centre…). PII is never accepted here —
+    ///   it is resolved from the employee's profile by the host.
+    /// Output (JSON): { provider_id, status, http_code, reference? }
+    enroll: func(req: generic-input) -> result<list<u8>, string>;
+}
