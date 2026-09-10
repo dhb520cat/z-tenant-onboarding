@@ -12,3 +12,7 @@ reference-impl/
 
 # offline docs snapshot used during the build
 docs/
+
+# internal drafts, not for publication
+x-post-draft.md
+SUBMISSION.md.bak
