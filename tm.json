@@ -1,0 +1,14 @@
+{
+  "cluster": "testnet",
+  "version": 1787800421,
+  "peer_ids": [
+    "QmPk4AtbFore74fJoP4CoS9Q96TvRvoQWR4VmkYtkBLmwz",
+    "QmQBh7yAKG1kwxsEjdMAToDkWSkZiXhoXgxb1oytKi2nXu",
+    "QmSGy7LgDCF796PH6ctS7LZ5U5TpWZjq6EU5S4NvaNk6cJ"
+  ],
+  "rtmr3_allowlist": [
+    "+XO6nLsfqnTkX0VcNk9AaXAu79ErxURODtjuGOIF8Sk7OQYq3PVVsMG8jzDEeNJQ"
+  ],
+  "signed_at": "2026-08-27T03:13:41Z",
+  "signature": "387384a9186bd06ab8ce8e2fbb7055ae96202eac4ce57c68a771fba8421be2006dacc087b6549d5919b42db163368da39d693444c4c1e771c2a9281394128e36"
+}

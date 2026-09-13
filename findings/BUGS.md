@@ -5,6 +5,9 @@ Each finding lists: where, what's wrong, why it matters, and a suggested fix.
 
 ---
 
+
+> **Re-verified 2026-09-13.** BUG-10 (blocker) and BUG-03 were re-checked against live endpoints three days after first report. Both stand unchanged — the testnet trust manifest has not been re-signed since 2026-08-27.
+
 ## BUG-01 · Duplicate `trustAnchor` key and duplicate import in the official AI-assistant skill file
 
 **Page:** `/developers/adk/support/ai-coding-assistants` — "Full skill file — t3n-adk-quickstart/SKILL.md", Step 3
@@ -135,6 +138,16 @@ version that release targets. At minimum, correct the five version numbers and a
 **Severity:** High (produces a contract the host refuses to load)
 
 ---
+
+### Re-verified 2026-09-13 — docs unchanged
+
+`/developers/adk/get-started/walkthrough/write-contract` still publishes
+`host-interfaces-2.2.0` and `host-tenant-1.2.0`. Neither version resolves; this
+repository builds against `host-interfaces-2.1.0`, `host-tenant-1.0.0` and
+`host-outbox-1.0.0`, which are what the reference implementation actually vendors.
+Anyone copying the walkthrough's `world.wit` verbatim still gets a build that
+cannot resolve its imports.
+
 
 ## BUG-04 · Walkthrough's `Cargo.toml` omits the `hex` dependency that the same documentation set requires
 
@@ -527,6 +540,25 @@ testnet (and provision the production operator key), and make the SDK's validati
 missing fields and the manifest's `signed_at`/`version`.
 
 ---
+
+### Re-verified 2026-09-13 00:22 UTC — still unfixed, and the manifest has not moved
+
+Three days after this was first reported, `GET https://cn-api.sg.testnet.t3n.terminal3.io/api/trust-manifest`
+returns byte-for-byte what it returned on 2026-09-10: HTTP 200, 518 bytes, `signed_at`
+still `2026-08-27T03:13:41Z`, `version` still `1787800421`.
+
+| Field required by SDK 5.14.0 | Served on 2026-09-13 |
+|---|---|
+| `rtmr1_allowlist` | absent |
+| `rtmr3_allowlist` | present |
+| `sev_snp_measurement_allowlist` | absent |
+| `tdx_mrtd_allowlist` | absent |
+
+The manifest has gone seventeen days without a re-signing, so this is not a transient
+deployment gap. Every new builder following the Quickstart still hits it at the first
+network call, and testnet's attestation policy still does not carry the SP-003
+mitigation that your own SDK doc-comment calls "the real SP-003 mitigation".
+
 
 ## BUG-11 · `setEnvironment("sandbox")` silently targets the testnet cluster
 
