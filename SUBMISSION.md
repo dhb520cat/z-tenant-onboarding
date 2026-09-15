@@ -8,9 +8,10 @@
 1. A working contract that enrols an employee into five vendors without ever holding their PII.
 2. [**findings/BUGS.md**](findings/BUGS.md) — 14 documented findings from following the new docs,
    with reproductions. BUG-10 is a blocker: `fetchTrustedManifest` fails on sandbox, testnet **and**
-   production, so nobody can complete the Quickstart on the verified path. Re-checked three days
-   later against the live endpoint — unchanged, and the manifest has not been re-signed since
-   2026-08-27.
+   production, so nobody can complete the Quickstart on the verified path. **Tracked to resolution:
+   re-checked on 09-13 (unchanged) and on 09-16 — the manifest was re-signed on 09-15 with
+   `rtmr1_allowlist` present, and `fetchTrustedManifest` now succeeds on sandbox and testnet.**
+   Verified by running it. I make no claim that this report caused the fix.
 
 ---
 

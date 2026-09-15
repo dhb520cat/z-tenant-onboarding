@@ -13,9 +13,10 @@ Verified end-to-end on testnet. The privacy claim is not asserted; it is measure
 > produced: 14 findings with reproductions, including a blocker that stops the documented Quickstart
 > at its first network call on every environment.**
 >
-> Re-checked against live endpoints on 2026-09-13, three days after first report: the testnet trust
-> manifest returns byte-for-byte what it returned on 09-10, `signed_at` still `2026-08-27` — seventeen
-> days without a re-signing. BUG-03's versions are still published unchanged. Both still stand.
+> Tracked to resolution. Re-checked 09-13 (unchanged) and again **2026-09-16: BUG-10 is fixed** —
+> the manifest was re-signed on 09-15 with `rtmr1_allowlist` present, and `fetchTrustedManifest` now
+> succeeds on sandbox and testnet. Verified by running it, not by reading the manifest. BUG-03's
+> published versions are unchanged as of the same check. A finding that gets fixed should say so.
 
 ---
 

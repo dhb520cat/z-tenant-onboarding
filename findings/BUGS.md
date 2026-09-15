@@ -541,7 +541,32 @@ missing fields and the manifest's `signed_at`/`version`.
 
 ---
 
-### Re-verified 2026-09-13 00:22 UTC — still unfixed, and the manifest has not moved
+### RESOLVED — re-verified 2026-09-16 16:00 UTC, the blocker no longer reproduces
+
+`fetchTrustedManifest` now **succeeds on sandbox and testnet**. The served manifest was re-signed at
+`2026-09-15T05:54:01Z` (version `1789451641`, previously `1787800421` signed `2026-08-27`) and now
+carries `rtmr1_allowlist` — the field the SDK's own doc-comment calls "the real SP-003 mitigation".
+The SDK has also moved to 5.15.0.
+
+```
+sandbox     ✓ expected_peer_ids, rtmr3_allowlist, rtmr1_allowlist, sev_snp_measurement_allowlist, source
+testnet     ✓ same
+production  ✗ "No trust-manifest operator key pinned for environment production —
+              signed trust manifests are not provisioned"
+```
+
+Production's failure is now a different and clearer condition: not a malformed manifest, but an
+environment that has no operator key pinned. That is a stated configuration state rather than a parse
+error, and it no longer blocks the documented Quickstart, which targets testnet.
+
+**Testnet's attestation policy now carries the SP-003 mitigation.** I am not claiming this report
+caused the fix — I have no visibility into your release planning, and the timing alone proves nothing.
+Recording it because a finding that has been fixed should say so, in the same place it made the
+accusation.
+
+The original report is preserved below unchanged.
+
+### Original report — 2026-09-10, and its 2026-09-13 re-check (both now historical)
 
 Three days after this was first reported, `GET https://cn-api.sg.testnet.t3n.terminal3.io/api/trust-manifest`
 returns byte-for-byte what it returned on 2026-09-10: HTTP 200, 518 bytes, `signed_at`
