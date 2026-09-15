@@ -10,8 +10,8 @@ Verified end-to-end on testnet. The privacy claim is not asserted; it is measure
 [Proof](#proof-the-privacy-property-measured-not-claimed).
 
 > **The challenge asked us to try the new docs. [findings/BUGS.md](findings/BUGS.md) is what that
-> produced: 14 findings with reproductions, including a blocker that stops the documented Quickstart
-> at its first network call on every environment.**
+> produced: 14 findings with reproductions, including a blocker that stopped the documented
+> Quickstart at its first network call, on every environment, when it was reported on 2026-09-10.**
 >
 > Tracked to resolution. Re-checked 09-13 (unchanged) and again **2026-09-16: BUG-10 is fixed** —
 > the manifest was re-signed on 09-15 with `rtmr1_allowlist` present, and `fetchTrustedManifest` now
