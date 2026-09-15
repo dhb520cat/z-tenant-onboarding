@@ -9,6 +9,14 @@ the employee's personal data**.
 Verified end-to-end on testnet. The privacy claim is not asserted; it is measured — see
 [Proof](#proof-the-privacy-property-measured-not-claimed).
 
+> **The challenge asked us to try the new docs. [findings/BUGS.md](findings/BUGS.md) is what that
+> produced: 14 findings with reproductions, including a blocker that stops the documented Quickstart
+> at its first network call on every environment.**
+>
+> Re-checked against live endpoints on 2026-09-13, three days after first report: the testnet trust
+> manifest returns byte-for-byte what it returned on 09-10, `signed_at` still `2026-08-27` — seventeen
+> days without a re-signing. BUG-03's versions are still published unchanged. Both still stand.
+
 ---
 
 ## The problem

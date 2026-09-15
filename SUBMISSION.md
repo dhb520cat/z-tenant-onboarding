@@ -2,7 +2,15 @@
 
 **Repository:** https://github.com/dhb520cat/z-tenant-onboarding
 **Contract:** `z-tenant-onboarding` v0.1.1, registered and running on testnet
-**Submitted:** 2026-09-10
+**Submitted:** 2026-09-10 · **findings re-verified 2026-09-13**
+
+**Two deliverables, not one:**
+1. A working contract that enrols an employee into five vendors without ever holding their PII.
+2. [**findings/BUGS.md**](findings/BUGS.md) — 14 documented findings from following the new docs,
+   with reproductions. BUG-10 is a blocker: `fetchTrustedManifest` fails on sandbox, testnet **and**
+   production, so nobody can complete the Quickstart on the verified path. Re-checked three days
+   later against the live endpoint — unchanged, and the manifest has not been re-signed since
+   2026-08-27.
 
 ---
 
